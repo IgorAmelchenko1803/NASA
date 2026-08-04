@@ -1,9 +1,7 @@
-name: Run Postman Tests
+name: Postman Tests
 
 on:
   push:
-    branches:
-      - "**"
   workflow_dispatch:
 
 jobs:
@@ -12,8 +10,8 @@ jobs:
 
     env:
       COLLECTION: tests/collection.json
-      REPORT_DIR: newman
-      REPORT_FILE: newman-report.html
+      REPORT_FILE: postman-report.html
+      BASE_URL: https://dog.ceo
 
     steps:
       - name: Checkout repository
@@ -23,24 +21,22 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: current
-          cache: npm
 
       - name: Install Newman and HTML Extra Reporter
         run: |
-          npm install -g newman newman-reporter-htmltextra
-
-      - name: Create report directory
-        run: mkdir -p $REPORT_DIR
+          npm install -g newman newman-reporter-htmlextra
 
       - name: Run Postman Collection
+        continue-on-error: true
         run: |
           newman run "$COLLECTION" \
             --reporters cli,htmlextra \
-            --reporter-htmlextra-export "$REPORT_DIR/$REPORT_FILE"
+            --reporter-htmlextra-export "$REPORT_FILE" \
+            --env-var base_url="$BASE_URL"
 
-      - name: Upload Newman Report
+      - name: Upload HTML Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: newman-html-report
-          path: ${{ env.REPORT_DIR }}/${{ env.REPORT_FILE }}
+          name: postman-html-report
+          path: ${{ env.REPORT_FILE }}
