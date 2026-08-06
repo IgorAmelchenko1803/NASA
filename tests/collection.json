@@ -1,44 +1,72 @@
 {
-"info": {
-"_postman_id": "5f80d83f-cf86-45ff-8fab-5827d5682d52",
-"name": "Nasa",
-"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-"_exporter_id": "56931677",
-"_collection_link": "https://go.postman.co/collection/56931677-5f80d83f-cf86-45ff-8fab-5827d5682d52?source=collection_link"
-},
-"variable": [
-{
-"key": "secret_key",
-"value": "",
-"type": "string"
-}
-],
-"item": [
-{
-"name": "Apod Api",
-"request": {
-"method": "GET",
-"url": {
-"raw": "https://api.nasa.gov/planetary/apod?api_key={{secret_key}}",
-"protocol": "https",
-"host": [
-"api",
-"nasa",
-"gov"
-],
-"path": [
-"planetary",
-"apod"
-],
-"query": [
-{
-"key": "api_key",
-"value": "{{secret_key}}"
-}
-]
-}
-},
-"response": []
-}
-]
+  "info": {
+    "_postman_id": "5f80d83f-cf86-45ff-8fab-5827d5682d52",
+    "name": "Nasa",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "56931677",
+    "_collection_link": "https://go.postman.co/collection/56931677-5f80d83f-cf86-45ff-8fab-5827d5682d52?source=collection_link"
+  },
+  "variable": [
+    {
+      "key": "secret_key",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Apod Api",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response time is less than 1200ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(1200);\r",
+              "});\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+          },
+          {
+            "key": "accept-language",
+            "value": "ru-UA,ru-RU;q=0.9,ru;q=0.8,en-US;q=0.7,en;q=0.6,uk-UA;q=0.5,uk;q=0.4"
+          }
+        ],
+        "url": {
+          "raw": "https://api.nasa.gov/planetary/apod?api_key={{secret_key}}",
+          "protocol": "https",
+          "host": [
+            "api",
+            "nasa",
+            "gov"
+          ],
+          "path": [
+            "planetary",
+            "apod"
+          ],
+          "query": [
+            {
+              "key": "api_key",
+              "value": "{{secret_key}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
 }
