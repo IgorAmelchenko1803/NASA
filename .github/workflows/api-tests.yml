@@ -5,16 +5,18 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
-  
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   postman-tests:
     runs-on: ubuntu-latest
 
     env:
       COLLECTION: tests/collection.json
-      REPORT_DIR: newman
-      REPORT_FILE: newman-report.html
+      REPORT_DIR: reports
+      REPORT_FILE: index.html
       SECRET_KEY: ${{ secrets.api_key }}
 
     steps:
@@ -37,27 +39,35 @@ jobs:
           sed -i 's|api_key=[^"& ]*|api_key={{secret_key}}|g' "$COLLECTION"
 
       - name: Run Postman tests
+        id: newman
         continue-on-error: true
         run: |
           mkdir -p "$REPORT_DIR"
           newman run "$COLLECTION" \
             --env-var "secret_key=${SECRET_KEY}" \
             --reporters cli,htmlextra \
-            --reporter-htmlextra-export reports/index.html
+            --reporter-htmlextra-export "$REPORT_DIR/$REPORT_FILE"
 
       - name: Upload HTML Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: newman-html-report
-          path: newman/newman-report.html
+          path: reports/index.html
+
+      - name: Setup Pages
+        if: always()
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        if: always()
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./reports
 
       - name: Deploy report to GitHub Pages
         if: always()
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./reports
+        uses: actions/deploy-pages@v5
 
       - name: Fail pipeline if Newman failed
         if: steps.newman.outcome == 'failure'
