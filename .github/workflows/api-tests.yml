@@ -28,11 +28,15 @@ jobs:
 
       - name: Run Postman Collection
         continue-on-error: true
+        env:
+          secret_key: ${{ secrets.api_key }}
         run: |
           newman run "$COLLECTION" \
+            -e tests/environment.json \
             --reporters cli,htmlextra \
             --reporter-htmlextra-export "$REPORT_FILE" \
-            --env-var base_url="$BASE_URL"
+            --env-var base_url="$BASE_URL" \
+            --env-var secret_key="$secret_key"
 
       - name: Upload HTML Report
         if: always()
