@@ -30,18 +30,32 @@ jobs:
         run: mkdir -p ${{ env.REPORT_DIR }}
 
       - name: Run Postman tests
+        id: newman
+        continue-on-error: true
         env:
           secret_key: ${{ secrets.api_key }}
         run: |
+          mkdir -p reports
           newman run "${{ env.COLLECTION }}" \
             --env-var "secret_key=${{ env.secret_key }}" \
             --reporters cli,htmlextra \
-            --reporter-htmlextra-export "${{ env.REPORT_DIR }}/${{ env.REPORT_FILE }}"
+            --reporter-htmlextra-export reports/index.html
 
       - name: Upload Newman HTML Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: newman-html-report
-          path: ${{ env.REPORT_DIR }}/${{ env.REPORT_FILE }}
+          path: reports/index.html
           if-no-files-found: error
+
+      - name: Deploy report to GitHub Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./reports
+
+      - name: Fail pipeline if Newman failed
+        if: steps.newman.outcome == 'failure'
+        run: exit 1
