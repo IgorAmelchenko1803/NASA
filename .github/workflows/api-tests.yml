@@ -4,17 +4,15 @@ on:
   push:
   workflow_dispatch:
 
-permissions:
-  contents: write
-
-env:
-  COLLECTION: tests/collection.json
-  REPORT_DIR: reports
-  REPORT_FILE: index.html
-
 jobs:
   postman-tests:
     runs-on: ubuntu-latest
+
+    env:
+      COLLECTION: tests/collection.json
+      REPORT_DIR: newman
+      REPORT_FILE: newman-report.html
+      SECRET_KEY: ${{ secrets.api_key }}
 
     steps:
       - name: Checkout repository
@@ -25,38 +23,38 @@ jobs:
         with:
           node-version: current
 
-      - name: Install Newman and HTML Extra Reporter
+      - name: Install Newman and HTML Reporter
         run: |
           npm install -g newman newman-reporter-htmlextra
 
-      - name: Create report directory
-        run: mkdir -p ${{ env.REPORT_DIR }}
+      - name: Replace API key with GitHub Secret
+        shell: bash
+        run: |
+          sed -i 's|"api_key":"[^"]*"|"api_key":"{{secret_key}}"|g' "$COLLECTION"
+          sed -i 's|api_key=[^"& ]*|api_key={{secret_key}}|g' "$COLLECTION"
 
       - name: Run Postman tests
-        id: newman
         continue-on-error: true
-        env:
-          secret_key: ${{ secrets.api_key }}
         run: |
-          newman run "${{ env.COLLECTION }}" \
-            --env-var "secret_key=${{ env.secret_key }}" \
+          mkdir -p "$REPORT_DIR"
+          newman run "$COLLECTION" \
+            --env-var "secret_key=${SECRET_KEY}" \
             --reporters cli,htmlextra \
-            --reporter-htmlextra-export "${{ env.REPORT_DIR }}/${{ env.REPORT_FILE }}"
+            --reporter-htmlextra-export reports/index.html
 
-      - name: Upload Newman HTML Report
+      - name: Upload HTML Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: newman-html-report
-          path: ${{ env.REPORT_DIR }}/${{ env.REPORT_FILE }}
-          if-no-files-found: error
+          path: newman/newman-report.html
 
       - name: Deploy report to GitHub Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./${{ env.REPORT_DIR }}
+          publish_dir: ./reports
 
       - name: Fail pipeline if Newman failed
         if: steps.newman.outcome == 'failure'
