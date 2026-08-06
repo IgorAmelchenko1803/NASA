@@ -4,14 +4,14 @@ on:
   push:
   workflow_dispatch:
 
+env:
+  COLLECTION: tests/collection.json
+  REPORT_DIR: newman
+  REPORT_FILE: newman-report.html
+
 jobs:
   postman-tests:
     runs-on: ubuntu-latest
-
-    env:
-      COLLECTION: tests/collection.json
-      REPORT_FILE: postman-report.html
-      BASE_URL: https://dog.ceo
 
     steps:
       - name: Checkout repository
@@ -26,21 +26,22 @@ jobs:
         run: |
           npm install -g newman newman-reporter-htmlextra
 
-      - name: Run Postman Collection
-        continue-on-error: true
+      - name: Create report directory
+        run: mkdir -p ${{ env.REPORT_DIR }}
+
+      - name: Run Postman tests
         env:
           secret_key: ${{ secrets.api_key }}
         run: |
-          newman run "$COLLECTION" \
-            -e tests/environment.json \
+          newman run "${{ env.COLLECTION }}" \
+            --env-var "secret_key=${{ env.secret_key }}" \
             --reporters cli,htmlextra \
-            --reporter-htmlextra-export "$REPORT_FILE" \
-            --env-var base_url="$BASE_URL" \
-            --env-var secret_key="$secret_key"
+            --reporter-htmlextra-export "${{ env.REPORT_DIR }}/${{ env.REPORT_FILE }}"
 
-      - name: Upload HTML Report
+      - name: Upload Newman HTML Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: postman-html-report
-          path: ${{ env.REPORT_FILE }}
+          name: newman-html-report
+          path: ${{ env.REPORT_DIR }}/${{ env.REPORT_FILE }}
+          if-no-files-found: error
