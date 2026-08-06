@@ -9,8 +9,8 @@ permissions:
 
 env:
   COLLECTION: tests/collection.json
-  REPORT_DIR: newman
-  REPORT_FILE: newman-report.html
+  REPORT_DIR: reports
+  REPORT_FILE: index.html
 
 jobs:
   postman-tests:
@@ -38,18 +38,17 @@ jobs:
         env:
           secret_key: ${{ secrets.api_key }}
         run: |
-          mkdir -p reports
           newman run "${{ env.COLLECTION }}" \
             --env-var "secret_key=${{ env.secret_key }}" \
             --reporters cli,htmlextra \
-            --reporter-htmlextra-export reports/index.html
+            --reporter-htmlextra-export "${{ env.REPORT_DIR }}/${{ env.REPORT_FILE }}"
 
       - name: Upload Newman HTML Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: newman-html-report
-          path: reports/index.html
+          path: ${{ env.REPORT_DIR }}/${{ env.REPORT_FILE }}
           if-no-files-found: error
 
       - name: Deploy report to GitHub Pages
@@ -57,7 +56,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./reports
+          publish_dir: ./${{ env.REPORT_DIR }}
 
       - name: Fail pipeline if Newman failed
         if: steps.newman.outcome == 'failure'
