@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Nasa" tests="1" time="0.490">
+  <testsuite name="Apod Api" id="b874fdfa-c2bc-4fd3-9f77-d024cc8630ab" timestamp="2026-08-07T05:21:12.196Z" tests="2" failures="1" errors="0" time="0.490">
+    <testcase name="Response time is less than 1200ms" time="0.490" classname="ApodApi"/>
+    <testcase name="Status code is 200" time="0.490" classname="ApodApi">
+      <failure type="AssertionFailure" message="expected response to have status code 200 but got 403">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 5f80d83f-cf86-45ff-8fab-5827d5682d52.]]>
+        <![CDATA[Collection name: Nasa.]]>
+        <![CDATA[Request name: Apod Api.]]>
+        <![CDATA[Test description: Status code is 200.]]>
+        <![CDATA[Error message: expected response to have status code 200 but got 403.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 200 but got 403
+   at Object.eval sandbox-script.js:2:1).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+</testsuites>
