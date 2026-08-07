@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Nasa" tests="1" time="0.373">
-  <testsuite name="Apod Api" id="f97049ab-8021-4de3-8fff-96c7042d42a8" timestamp="2026-08-07T05:38:04.583Z" tests="2" failures="0" errors="0" time="0.373">
-    <testcase name="Response time is less than 1200ms" time="0.373" classname="ApodApi"/>
-    <testcase name="Status code is 200" time="0.373" classname="ApodApi"/>
+<testsuites name="Nasa" tests="1" time="0.341">
+  <testsuite name="Apod Api" id="d999fdfe-6409-4ed1-b171-c8cb983054b1" timestamp="2026-08-07T05:41:30.094Z" tests="2" failures="0" errors="0" time="0.341">
+    <testcase name="Response time is less than 1200ms" time="0.341" classname="ApodApi"/>
+    <testcase name="Status code is 200" time="0.341" classname="ApodApi"/>
   </testsuite>
 </testsuites>
