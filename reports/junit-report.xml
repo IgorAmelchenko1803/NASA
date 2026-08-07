@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Nasa" tests="1" time="0.341">
-  <testsuite name="Apod Api" id="d999fdfe-6409-4ed1-b171-c8cb983054b1" timestamp="2026-08-07T05:41:30.094Z" tests="2" failures="0" errors="0" time="0.341">
-    <testcase name="Response time is less than 1200ms" time="0.341" classname="ApodApi"/>
-    <testcase name="Status code is 200" time="0.341" classname="ApodApi"/>
+<testsuites name="Nasa" tests="1" time="2.644">
+  <testsuite name="Apod Api" id="75e3fc2b-29ac-42d6-8f1a-d4d04f9b4837" timestamp="2026-08-07T05:46:21.620Z" tests="2" failures="1" errors="0" time="2.644">
+    <testcase name="Response time is less than 1200ms" time="2.644" classname="ApodApi">
+      <failure type="AssertionFailure" message="expected 2644 to be below 1200">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 5f80d83f-cf86-45ff-8fab-5827d5682d52.]]>
+        <![CDATA[Collection name: Nasa.]]>
+        <![CDATA[Request name: Apod Api.]]>
+        <![CDATA[Test description: Response time is less than 1200ms.]]>
+        <![CDATA[Error message: expected 2644 to be below 1200.]]>
+        <![CDATA[Stacktrace: AssertionError: expected 2644 to be below 1200
+   at Object.eval sandbox-script.js:1:1).]]>
+      </failure>
+    </testcase>
+    <testcase name="Status code is 200" time="2.644" classname="ApodApi"/>
   </testsuite>
 </testsuites>

@@ -472,7 +472,7 @@ body.theme-light code {
                 <a class="nav-link text-white" id="pills-requests-tab" data-toggle="pill" href="#pills-requests" role="tab" aria-controls="pills-requests" aria-selected="false">Total Requests <span class="badge badge-light">1</span></a>
             </li>
             <li class="nav-item bg-danger" data-toggle="tooltip" title="Click to view the Failed Tests">
-                <a class="nav-link text-white" id="pills-failed-tab" data-toggle="pill" href="#pills-failed" role="tab" aria-controls="pills-failed" aria-selected="false">Failed Tests <span class="badge badge-light">0</span></a>
+                <a class="nav-link text-white" id="pills-failed-tab" data-toggle="pill" href="#pills-failed" role="tab" aria-controls="pills-failed" aria-selected="false">Failed Tests <span class="badge badge-light">1</span></a>
             </li>
             <li class="nav-item bg-warning" data-toggle="tooltip" title="Click to view the Skipped Tests">
                 <a class="nav-link text-white" id="pills-skipped-tab" data-toggle="pill" href="#pills-skipped" role="tab" aria-controls="pills-skipped" aria-selected="false">Skipped Tests <span class="badge badge-light">0</span></a>
@@ -483,11 +483,11 @@ body.theme-light code {
 <div class="row">
   <div class="col-md-9 col-lg-12 main">
    <h1 class="display-2 text-center">NASA APOD API Tests</h1>
-   <h5 class="text-center">Friday, 07 August 2026 05:41:30</h5>
+   <h5 class="text-center">Friday, 07 August 2026 05:46:24</h5>
    <div class="row">
     <div class="col-lg-3 col-md-6">
      <div class="card text-white card-success">
-      <div class="card-body bg-success">
+      <div class="card-body bg-danger">
        <div class="rotate">
         <i class="fa fa-retweet fa-5x"></i>
        </div>
@@ -509,12 +509,12 @@ body.theme-light code {
     </div>
     <div class="col-lg-3 col-md-6">
      <div class="card text-white card-info">
-      <div class="card-body bg-success">
+      <div class="card-body bg-danger">
        <div class="rotate">
         <i class="fa fa-plus-circle fa-5x"></i>
        </div>
        <h6 class="text-uppercase">Total Failed Tests</h6>
-       <h1 class="display-1">0</h1>
+       <h1 class="display-1">1</h1>
       </div>
      </div>
     </div>
@@ -550,9 +550,9 @@ body.theme-light code {
             <div class="card border-info">
                 <div class="card-body">
                 <h5 class="card-title text-uppercase text-white text-center bg-info">Timings and Data</h5>
-                <span><i class="fas fa-stopwatch"></i></span><strong> Total run duration:</strong> 378ms<br>
+                <span><i class="fas fa-stopwatch"></i></span><strong> Total run duration:</strong> 2.6s<br>
                 <span><i class="fas fa-database"></i></span><strong> Total data received:</strong> 1.29KB<br>
-                <span><i class="fas fa-stopwatch"></i></span><strong> Average response time:</strong> 341ms<br>
+                <span><i class="fas fa-stopwatch"></i></span><strong> Average response time:</strong> 2.6s<br>
                 </div>
             </div>
         </div>
@@ -584,10 +584,10 @@ body.theme-light code {
                         <td class="text-center">1</td>
                         <td class="text-center">0</td>
                     </tr>
-                    <tr class="">
+                    <tr class="table-danger">
                         <td>Assertions</td>
                         <td class="text-center">2</td>
-                        <td class="text-center">0</td>
+                        <td class="text-center">1</td>
                     </tr>
                     <tr class="">
                         <td>Skipped Tests</td>
@@ -608,9 +608,36 @@ body.theme-light code {
             <div class="tab-pane fade" id="pills-failed" role="tabcard" aria-labelledby="pills-failed-tab">
                 <button id="topOfFailuresScreen" class="btn btn-outline-success btn-sm backToTop" onclick="topFunction()">Go To Top</button>
 
-                <div class="alert alert-success text-uppercase text-center">
-                     <br><br><h1 class="text-center">There are no failed tests <span><i class="far fa-thumbs-up"></i></span></h1><br><br>
-                </div>
+                    <div class="btn-group float-right" role="group" aria-label="Button Group">
+                        <button id="openAllFailed" class="btn btn-outline-success btn-sm float-right" style="text-align: center; width: 185px;">Expand All Failed Tests</button>
+                    </div>
+                    <br>
+                    <br>
+
+                    <div class="alert alert-danger text-uppercase text-center">
+                        <h4>Showing 1 Failure</h4>
+                    </div>
+                    <div class="col-sm-12 mb-3">
+                    <div class="card-deck">
+                        <div class="card border-danger">
+                            <div class="card-header bg-danger">
+                                <a data-toggle="collapse" href="#" data-target="#fails-collapse-acf9bfdb-8351-4cff-b1af-3d1beef7e82f" aria-expanded="false" aria-controls="collapse" id="fails-acf9bfdb-8351-4cff-b1af-3d1beef7e82f" class="collapsed text-white z-block">
+                                    Iteration 1 - AssertionError - Nasa - Apod Api <i class="float-lg-right fa fa-chevron-down" style="padding-top:5px;"></i>
+                                </a>
+                            </div>
+                            <div id="fails-collapse-acf9bfdb-8351-4cff-b1af-3d1beef7e82f" class="collapse" aria-labelledby="fails-acf9bfdb-8351-4cff-b1af-3d1beef7e82f">
+                            <div class="card-body">
+                                <h5 ><strong>Failed Test:</strong> Response time is less than 1200ms</h5>
+                            <hr>
+                            <h5 class="card-title text-uppercase text-white text-center bg-danger">Assertion Error Message</h5>
+                            <div>
+                                <pre><code >expected 2644 to be below 1200</code></pre>
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
             </div>
 
             <div class="tab-pane fade" id="pills-skipped" role="tabcard" aria-labelledby="pills-skipped-tab">
@@ -625,6 +652,7 @@ body.theme-light code {
             <button id="topOfRequestsScreen" class="btn btn-outline-success btn-sm backToTop" onclick="topFunction()">Go To Top</button>
 
             <div class="btn-group float-right" role="group" aria-label="Button Group">
+                <button id="showOnlyFailures" class="btn btn-outline-success btn-sm float-right" style="text-align: center; width:160px;">Show Failed Iterations</button>
                 <button id="openAll" class="btn btn-outline-success btn-sm float-right" style="text-align: center; width: 140px;">Expand Folders</button>
                 <button id="openAllRequests" class="btn btn-outline-success btn-sm float-right" style="text-align: center; width: 140px;">Expand Requests</button>
             </div>
@@ -639,16 +667,16 @@ body.theme-light code {
     </div>
     <h6 class="text-uppercase text-muted" id="iterationSelected" style="padding-top: 10px;"></h6>
 	<div class="tab-content" id="execution-data">
-            <div id="folder-ccec5e2e-4c0d-49f1-a1af-e9c1bc3998b0" class="card-deck iteration-0">
+            <div id="folder-f9c76d7d-91f7-44ef-acfa-b4932f99b727" class="card-deck iteration-0">
             <div class="row iteration-0">
                 <div class="col-sm-12 mb-3 iteration-0">
                 <div class="card iteration-0">
-                    <div class="card-header  bg-success iteration-0">
-                        <a data-toggle="collapse" href="#" data-target="#collapse-ccec5e2e-4c0d-49f1-a1af-e9c1bc3998b0" aria-expanded="false" aria-controls="collapse" id="requests-ccec5e2e-4c0d-49f1-a1af-e9c1bc3998b0" class="collapsed text-white z-block">
+                    <div class="card-header  bg-danger iteration-0">
+                        <a data-toggle="collapse" href="#" data-target="#collapse-f9c76d7d-91f7-44ef-acfa-b4932f99b727" aria-expanded="false" aria-controls="collapse" id="requests-f9c76d7d-91f7-44ef-acfa-b4932f99b727" class="collapsed text-white z-block">
                     Iteration: 1 - Apod Api <i class="float-lg-right fa fa-chevron-down" style="padding-top: 5px;"></i>
                 </a>
                     </div>
-                    <div id="collapse-ccec5e2e-4c0d-49f1-a1af-e9c1bc3998b0" class="collapse" aria-labelledby="requests-ccec5e2e-4c0d-49f1-a1af-e9c1bc3998b0">
+                    <div id="collapse-f9c76d7d-91f7-44ef-acfa-b4932f99b727" class="collapse" aria-labelledby="requests-f9c76d7d-91f7-44ef-acfa-b4932f99b727">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12 mb-3">
@@ -664,14 +692,14 @@ body.theme-light code {
                                     <div class="card-body">
                                     <h5 class="card-title text-uppercase text-white text-center bg-info">Response Information</h5>
                                     <span><i class="fas fa-info-circle"></i></span><strong> Response Code:</strong> <span class="float-right badge-outline badge badge-success"> 200 - OK</span><br>
-                                    <span><i class="fas fa-stopwatch"></i></span><strong> Mean time per request:</strong> <span class="float-right badge-outline badge badge-success"> 341ms</span><br>
+                                    <span><i class="fas fa-stopwatch"></i></span><strong> Mean time per request:</strong> <span class="float-right badge-outline badge badge-success"> 2.6s</span><br>
                                     <span><i class="fas fa-database"></i></span><strong> Mean size per request:</strong> <span class="float-right badge-outline badge badge-success"> 1.29KB</span><br>
                                     <hr>
                                     <h5 class="card-title text-uppercase text-white text-center bg-info">Test Pass Percentage</h5>
                                     <div>
                                         <div class="progress" style="height: 40px;">
-                                            <div class="progress-bar  bg-success" style="width: 100%" role="progressbar">
-                                            <h5 style="padding-top:5px;"><strong>100 %</strong></h5>
+                                            <div class="progress-bar  bg-danger" style="width: 100%" role="progressbar">
+                                            <h5 style="padding-top:5px;"><strong>50 %</strong></h5>
                                             </div>
                                         </div>
                                     </div>
@@ -708,7 +736,7 @@ body.theme-light code {
                                                     </tr>
                                                     <tr>
                                                         <td class="text-nowrap">Postman-Token</td>
-                                                        <td class="text-wrap">339db9ec-ee60-4721-be37-1424ba5320e9</td>
+                                                        <td class="text-wrap">68d19e66-4f15-4a3d-bc99-0a1a648ab0cb</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="text-nowrap">Host</td>
@@ -742,7 +770,7 @@ body.theme-light code {
                                             <tbody>
                                                 <tr>
                                                     <td class="text-nowrap">Date</td>
-                                                    <td class="text-wrap">Fri, 07 Aug 2026 05:41:30 GMT</td>
+                                                    <td class="text-wrap">Fri, 07 Aug 2026 05:46:24 GMT</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-nowrap">Content-Type</td>
@@ -790,7 +818,7 @@ body.theme-light code {
                                                 </tr>
                                                 <tr>
                                                     <td class="text-nowrap">X-Api-Umbrella-Request-Id</td>
-                                                    <td class="text-wrap">cvrauqh1imkst4git3gg</td>
+                                                    <td class="text-wrap">cvrb11ms97kv3s3cnlfg</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-nowrap">X-Cache</td>
@@ -818,7 +846,7 @@ body.theme-light code {
                                                 </tr>
                                                 <tr>
                                                     <td class="text-nowrap">X-Vcap-Request-Id</td>
-                                                    <td class="text-wrap">92d7966a-492c-4511-73a0-701f77757926</td>
+                                                    <td class="text-wrap">11f8b7f3-5468-4b21-62d9-75feb7be8e7c</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-nowrap">X-Xss-Protection</td>
@@ -843,11 +871,11 @@ body.theme-light code {
                                 <div class="card-body">
                                     <h5 class="card-title text-uppercase text-white text-center bg-info">Response Body</h5>
                                         <div class="dyn-height">
-                                                <pre><code id="copyText-d999fdfe-6409-4ed1-b171-c8cb983054b1" class="prettyPrint">{&quot;copyright&quot;:&quot;NSF\u2013DOE Vera C. Rubin Observatory/NOIRLab/SLAC/AURA\n Text: \nCecilia Chirenti \n(NASA\nGSFC, \nUMCP, \nCRESST II)&quot;,&quot;date&quot;:&quot;2026-08-07&quot;,&quot;explanation&quot;:&quot;There are more than half a million galaxies in the central panel of this image from the NSF-DOE Vera C. Rubin Observatory in Chile.   This is the COSMOS field, a patch of sky several times larger than the full moon, first observed by Hubble.   It has also been observed by Webb and other telescopes because it contains comparatively few bright stars from our own galaxy, offering a relatively unimpeded view of other galaxies outside the Milky Way.   The outer panels, numbered 1-10, show zoomed-in views of the corresponding small regions highlighted in the central panel.   The variety of galaxy shapes and sizes is astonishing.   Some of them are so far away that their light has traveled for billions of years before reaching Earth.   Rubin will come back every couple of days to the COSMOS field as part of its ten-year Legacy Survey of Space and Time.   It will allow a dynamic view of the COSMOS field and how the sky changes over time.&quot;,&quot;hdurl&quot;:&quot;https://apod.nasa.gov/apod/image/2608/noirlab2618b.jpg&quot;,&quot;media_type&quot;:&quot;image&quot;,&quot;service_version&quot;:&quot;v1&quot;,&quot;title&quot;:&quot;Rubin&#x27;s COSMOS field&quot;,&quot;url&quot;:&quot;https://apod.nasa.gov/apod/image/2608/noirlab2618b_1024.jpg&quot;}
+                                                <pre><code id="copyText-75e3fc2b-29ac-42d6-8f1a-d4d04f9b4837" class="prettyPrint">{&quot;copyright&quot;:&quot;NSF\u2013DOE Vera C. Rubin Observatory/NOIRLab/SLAC/AURA\n Text: \nCecilia Chirenti \n(NASA\nGSFC, \nUMCP, \nCRESST II)&quot;,&quot;date&quot;:&quot;2026-08-07&quot;,&quot;explanation&quot;:&quot;There are more than half a million galaxies in the central panel of this image from the NSF-DOE Vera C. Rubin Observatory in Chile.   This is the COSMOS field, a patch of sky several times larger than the full moon, first observed by Hubble.   It has also been observed by Webb and other telescopes because it contains comparatively few bright stars from our own galaxy, offering a relatively unimpeded view of other galaxies outside the Milky Way.   The outer panels, numbered 1-10, show zoomed-in views of the corresponding small regions highlighted in the central panel.   The variety of galaxy shapes and sizes is astonishing.   Some of them are so far away that their light has traveled for billions of years before reaching Earth.   Rubin will come back every couple of days to the COSMOS field as part of its ten-year Legacy Survey of Space and Time.   It will allow a dynamic view of the COSMOS field and how the sky changes over time.&quot;,&quot;hdurl&quot;:&quot;https://apod.nasa.gov/apod/image/2608/noirlab2618b.jpg&quot;,&quot;media_type&quot;:&quot;image&quot;,&quot;service_version&quot;:&quot;v1&quot;,&quot;title&quot;:&quot;Rubin&#x27;s COSMOS field&quot;,&quot;url&quot;:&quot;https://apod.nasa.gov/apod/image/2608/noirlab2618b_1024.jpg&quot;}
         </code></pre>
                                         </div>
                                         <div class="card-footer">
-                                            <button class="btn btn-outline-secondary btn-sm copyButton" type="button" data-clipboard-action="copy" data-clipboard-target="#copyText-d999fdfe-6409-4ed1-b171-c8cb983054b1">Copy to Clipboard</button>
+                                            <button class="btn btn-outline-secondary btn-sm copyButton" type="button" data-clipboard-action="copy" data-clipboard-target="#copyText-75e3fc2b-29ac-42d6-8f1a-d4d04f9b4837">Copy to Clipboard</button>
                                         </div>
                                 </div>
                             </div>
@@ -864,8 +892,8 @@ body.theme-light code {
                                             <tbody>
                                                 <tr >
                                                     <td >Response time is less than 1200ms</td>
-                                                    <td class="text-center bg-success">1</td>
                                                     <td class="text-center ">0</td>
+                                                    <td class="text-center bg-danger">1</td>
                                                     <td class="text-center ">0</td>
                                                 </tr>
                                                 <tr >
@@ -878,14 +906,14 @@ body.theme-light code {
                                             <tfoot>
                                                 <tr class="bg-light">
                                                     <td><strong>Total</strong></td>
-                                                    <td class="text-center">2</td>
-                                                    <td class="text-center">0</td>
+                                                    <td class="text-center">1</td>
+                                                    <td class="text-center">1</td>
                                                     <td class="text-center">0</td>
                                                 </tr>
                                             </tfoot>
                                         </table>
                                     </div>
-                                    <div class="row d-none">
+                                    <div class="row ">
                                     <div class="col-sm-12 mb-3">
                                         <div class="card-deck">
                                         <div class="card border-danger" style="width: 50rem;">
@@ -895,6 +923,10 @@ body.theme-light code {
                                                     <table class="table table-hover">
                                                     <thead><tr class="text-nowrap"><th>Test Name</th><th>Assertion Error</th></tr></thead>
                                                         <tbody>
+                                                            <tr>
+                                                                <td class="w-45 text-nowrap ">Response time is less than 1200ms</td>
+                                                                <td class="w-55"><pre><code >expected 2644 to be below 1200</code></pre></td>
+                                                            </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -1000,17 +1032,17 @@ $('#openAllRequests').on('click', function(e) {
 let clickCount = $(this).data("clickCount") || 1
 switch (clickCount){
     case 1:
-            $('#requests-ccec5e2e-4c0d-49f1-a1af-e9c1bc3998b0').removeClass('collapsed')
-            $('#collapse-ccec5e2e-4c0d-49f1-a1af-e9c1bc3998b0').removeClass('collapsed')
-            $('#requests-ccec5e2e-4c0d-49f1-a1af-e9c1bc3998b0').addClass('show')
-            $('#collapse-ccec5e2e-4c0d-49f1-a1af-e9c1bc3998b0').addClass('show')
+            $('#requests-f9c76d7d-91f7-44ef-acfa-b4932f99b727').removeClass('collapsed')
+            $('#collapse-f9c76d7d-91f7-44ef-acfa-b4932f99b727').removeClass('collapsed')
+            $('#requests-f9c76d7d-91f7-44ef-acfa-b4932f99b727').addClass('show')
+            $('#collapse-f9c76d7d-91f7-44ef-acfa-b4932f99b727').addClass('show')
         $('#openAllRequests').html("Collapse Requests");
         break;
     case 2:
-            $('#requests-ccec5e2e-4c0d-49f1-a1af-e9c1bc3998b0').addClass('collapsed')
-            $('#collapse-ccec5e2e-4c0d-49f1-a1af-e9c1bc3998b0').addClass('collapsed')
-            $('#requests-ccec5e2e-4c0d-49f1-a1af-e9c1bc3998b0').removeClass('show')
-            $('#collapse-ccec5e2e-4c0d-49f1-a1af-e9c1bc3998b0').removeClass('show')
+            $('#requests-f9c76d7d-91f7-44ef-acfa-b4932f99b727').addClass('collapsed')
+            $('#collapse-f9c76d7d-91f7-44ef-acfa-b4932f99b727').addClass('collapsed')
+            $('#requests-f9c76d7d-91f7-44ef-acfa-b4932f99b727').removeClass('show')
+            $('#collapse-f9c76d7d-91f7-44ef-acfa-b4932f99b727').removeClass('show')
         $('#openAllRequests').html("Expand Requests");
         break;
 }
@@ -1026,17 +1058,17 @@ $('#openAllSkipped').on('click', function(e) {
 let clickCount = $(this).data("clickCount") || 1
 switch (clickCount){
     case 1:
-            $('#skipped-ccec5e2e-4c0d-49f1-a1af-e9c1bc3998b0').removeClass('collapsed')
-            $('#skipped-collapse-ccec5e2e-4c0d-49f1-a1af-e9c1bc3998b0').removeClass('collapsed')
-            $('#skipped-ccec5e2e-4c0d-49f1-a1af-e9c1bc3998b0').addClass('show')
-            $('#skipped-collapse-ccec5e2e-4c0d-49f1-a1af-e9c1bc3998b0').addClass('show')
+            $('#skipped-f9c76d7d-91f7-44ef-acfa-b4932f99b727').removeClass('collapsed')
+            $('#skipped-collapse-f9c76d7d-91f7-44ef-acfa-b4932f99b727').removeClass('collapsed')
+            $('#skipped-f9c76d7d-91f7-44ef-acfa-b4932f99b727').addClass('show')
+            $('#skipped-collapse-f9c76d7d-91f7-44ef-acfa-b4932f99b727').addClass('show')
         $('#openAllSkipped').html("Collapse All Skipped Tests");
         break;
     case 2:
-            $('#skipped-ccec5e2e-4c0d-49f1-a1af-e9c1bc3998b0').addClass('collapsed')
-            $('#skipped-collapse-ccec5e2e-4c0d-49f1-a1af-e9c1bc3998b0').addClass('collapsed')
-            $('#skipped-ccec5e2e-4c0d-49f1-a1af-e9c1bc3998b0').removeClass('show')
-            $('#skipped-collapse-ccec5e2e-4c0d-49f1-a1af-e9c1bc3998b0').removeClass('show')
+            $('#skipped-f9c76d7d-91f7-44ef-acfa-b4932f99b727').addClass('collapsed')
+            $('#skipped-collapse-f9c76d7d-91f7-44ef-acfa-b4932f99b727').addClass('collapsed')
+            $('#skipped-f9c76d7d-91f7-44ef-acfa-b4932f99b727').removeClass('show')
+            $('#skipped-collapse-f9c76d7d-91f7-44ef-acfa-b4932f99b727').removeClass('show')
         $('#openAllSkipped').html("Expand All Skipped Tests");
         break;
 }
@@ -1054,9 +1086,21 @@ let failedItemContent
 let failedItemHeading
 switch (clickCount){
     case 1:
+            failedItemHeading = $('#fails-acf9bfdb-8351-4cff-b1af-3d1beef7e82f');
+            failedItemContent = $("#fails-collapse-acf9bfdb-8351-4cff-b1af-3d1beef7e82f");
+            failedItemHeading.removeClass('collapsed')
+            failedItemContent.removeClass('collapsed')
+            failedItemHeading.addClass('show')
+            failedItemContent.addClass('show')
         $('#openAllFailed').html("Collapse All Failed Tests");
         break;
     case 2:
+            failedItemHeading = $('#fails-acf9bfdb-8351-4cff-b1af-3d1beef7e82f');
+            failedItemContent = $("#fails-collapse-acf9bfdb-8351-4cff-b1af-3d1beef7e82f");
+            failedItemHeading.removeClass('show')
+            failedItemContent.removeClass('show')
+            failedItemHeading.addClass('collapsed')
+            failedItemContent.addClass('collapsed')
         $('#openAllFailed').html("Expand All Failed Tests");
         break;
 }
@@ -1181,6 +1225,8 @@ function scrollFunction() {
     document.getElementById("openAllRequests").style.display = "none";
 
 
+    document.getElementById("showOnlyFailures").style.display = "none";
+    document.getElementById("openAllFailed").style.display = "none";
   } else {
     document.getElementById("topOfRequestsScreen").style.display = "none";
     document.getElementById("topOfFailuresScreen").style.display = "none";
@@ -1188,6 +1234,8 @@ function scrollFunction() {
     document.getElementById("openAll").style.display = "block";
     document.getElementById("openAllRequests").style.display = "block";
 
+    document.getElementById("showOnlyFailures").style.display = "block";
+    document.getElementById("openAllFailed").style.display = "block";
   }
 }
 
@@ -1250,6 +1298,7 @@ window.onload = function () {
   document.getElementById('iteration-0').click();
   document.getElementById('iterationSelected').innerHTML = `Iteration ${document.getElementById('iteration-0').innerHTML} selected`
 
+    $("#iteration-0").removeClass('itPassed').addClass('itFailed')
 }
 </script>
 
