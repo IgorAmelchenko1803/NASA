@@ -60,7 +60,7 @@
           ],
           "query": [
             {
-              "key": "api_key",
+              "key": "NASA_API_KEY",
               "value": "{{secret_key}}"
             }
           ]
