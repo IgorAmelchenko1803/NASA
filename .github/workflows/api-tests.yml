@@ -1,74 +1,70 @@
-name: Postman Tests
+name: Postman API Tests (NASA)
 
 on:
   push:
-  workflow_dispatch:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:          # можно запускать вручную
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write             # нужно, чтобы сохранять отчёт в репозиторий
 
 jobs:
-  postman-tests:
+  api-tests:
     runs-on: ubuntu-latest
-
-    env:
-      COLLECTION: tests/collection.json
-      REPORT_DIR: reports
-      REPORT_FILE: index.html
-      SECRET_KEY: ${{ secrets.api_key }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: current
+          node-version: '20'
 
-      - name: Install Newman and HTML Reporter
+      - name: Install Newman + htmlextra
         run: |
-          npm install -g newman newman-reporter-htmlextra
+          npm install -g newman
+          npm install -g newman-reporter-htmlextra
 
-      - name: Replace API key with GitHub Secret
-        shell: bash
+      - name: Create reports folder
+        run: mkdir -p reports
+
+      - name: Run Postman Collection
         run: |
-          sed -i 's|"api_key":"[^"]*"|"api_key":"{{secret_key}}"|g' "$COLLECTION"
-          sed -i 's|api_key=[^"& ]*|api_key={{secret_key}}|g' "$COLLECTION"
+          newman run postman/collection.json \
+            ${{ hashFiles('postman/environment.json') != '' && format('-e postman/environment.json') || '' }} \
+            --env-var "secret_key=${{ secrets.NASA_API_KEY }}" \
+            --reporters cli,htmlextra,junit \
+            --reporter-htmlextra-export reports/index.html \
+            --reporter-htmlextra-title "NASA APOD API Tests" \
+            --reporter-htmlextra-darkTheme \
+            --reporter-junit-export reports/junit-report.xml
 
-      - name: Run Postman tests
-        id: newman
-        continue-on-error: true
-        run: |
-          mkdir -p "$REPORT_DIR"
-          newman run "$COLLECTION" \
-            --env-var "secret_key=${SECRET_KEY}" \
-            --reporters cli,htmlextra \
-            --reporter-htmlextra-export "$REPORT_DIR/$REPORT_FILE"
-
-      - name: Upload HTML Report
+      # Сохраняем отчёты как Artifacts (даже если тесты упали)
+      - name: Upload reports as Artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: newman-html-report
-          path: reports/index.html
+          name: postman-reports
+          path: reports/
+          retention-days: 30
 
-      - name: Setup Pages
-        if: always()
-        uses: actions/configure-pages@v5
+      # Сохраняем/перезаписываем index.html прямо в репозиторий
+      - name: Commit report to reports/index.html
+        if: always() && github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Upload Pages artifact
-        if: always()
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./reports
+          git add reports/index.html reports/junit-report.xml || true
 
-      - name: Deploy report to GitHub Pages
-        if: always()
-        uses: actions/deploy-pages@v5
-
-      - name: Fail pipeline if Newman failed
-        if: steps.newman.outcome == 'failure'
-        run: exit 1
+          if git diff --staged --quiet; then
+            echo "Отчёт не изменился"
+          else
+            git commit -m "docs: update Postman test report [skip ci]"
+            git push
+          fi
